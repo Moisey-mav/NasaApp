@@ -91,7 +91,7 @@ class CamersViewController: UIViewController {
 extension CamersViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return camersArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,11 +115,11 @@ extension CamersViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = TitleHeaderTableViewCell()
-            headerView.cameraLabel.text = "hello"
-            headerView.indicatorImage.image = UIImage(named: "disclosure indicator")
-            headerView.accessoryType = UITableViewCell.AccessoryType.none
-            let tap = UITapGestureRecognizer(target: self, action: #selector(tappedHeader))
-            headerView.addGestureRecognizer(tap)
+        headerView.cameraLabel.text = camersArray[section]
+        headerView.indicatorImage.image = UIImage(named: "disclosure indicator")
+        headerView.accessoryType = UITableViewCell.AccessoryType.none
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedHeader))
+        headerView.addGestureRecognizer(tap)
         return headerView
     }
     

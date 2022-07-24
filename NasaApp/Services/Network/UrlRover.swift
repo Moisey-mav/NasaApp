@@ -15,9 +15,9 @@ class UrlRover {
     }
     
     func setupData(name: String?, apiKey: String?, earthDate: String?) -> String {
-        guard let roverName = name else { return "Error" }
-        guard let apiKey = apiKey else { return "Error" }
-        guard let earthDate = earthDate  else { return "Error" }
+        guard let roverName = name else { return "Error"}
+        guard let apiKey = apiKey else { return "Error"}
+        guard let earthDate = earthDate  else { return "Error"}
         let url = creatingURL(name: roverName, apiKey: apiKey, earthDate: earthDate)
         return url
     }
