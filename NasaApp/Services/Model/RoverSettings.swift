@@ -13,7 +13,7 @@ final class RoverSettings {
         case roverName
     }
     
-    static var roverName: String! {
+    static var roverName: String? {
         get {
             return UserDefaults.standard.string(forKey: SettingsKeys.roverName.rawValue)
         } set {

@@ -9,7 +9,7 @@ import Foundation
 
 class NetworkDataFetcher {
     
-    private var sections: [Section] = []
+    public var sections: [Section] = []
     weak var tableView: CamersViewController?
     
     // декодируем полученные JSON данные в модель

@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 class CamersViewController: UIViewController {
     
     let camersTableView: UITableView = {
@@ -17,9 +15,7 @@ class CamersViewController: UIViewController {
         return tableView
     }()
     
-    private var sections: [Section] = []
     public var roverName: String = "Curiosity"
-    let camersArray = ["FRD", "FFF", "DOD", "LOL", "PPF"]
     let date = "2015-6-3"
     let constantFile = Constant()
     let urlRover = UrlRover()
@@ -38,12 +34,12 @@ class CamersViewController: UIViewController {
     private func setupTitleRover() {
         if RoverSettings.roverName != roverName {
             title = RoverSettings.roverName
-            roverName = RoverSettings.roverName
+            roverName = RoverSettings.roverName ?? "Unknow rover"
             networkData()
             camersTableView.reloadData()
         } else {
             title = RoverSettings.roverName
-            roverName = RoverSettings.roverName
+            roverName = RoverSettings.roverName ?? "Unknow rover"
             networkData()
             camersTableView.reloadData()
         }
@@ -91,7 +87,7 @@ class CamersViewController: UIViewController {
 extension CamersViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return camersArray.count
+        return networkDataFetcher.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -99,8 +95,8 @@ extension CamersViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTableViewCell.identifier, for: indexPath) as? ImageTableViewCell else { return UITableViewCell() }
+        cell.section = networkDataFetcher.sections[indexPath.section]
         cell.selectionStyle = .none
         return cell
     }
@@ -115,7 +111,7 @@ extension CamersViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = TitleHeaderTableViewCell()
-        headerView.cameraLabel.text = camersArray[section]
+        headerView.cameraLabel.text = "hello"
         headerView.indicatorImage.image = UIImage(named: "disclosure indicator")
         headerView.accessoryType = UITableViewCell.AccessoryType.none
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedHeader))

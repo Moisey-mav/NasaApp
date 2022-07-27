@@ -10,6 +10,7 @@ import UIKit
 class ImageCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ImageCollectionViewCell"
+    private var photo: Photo?
     
     private let photoImage: UIImageView = {
         let imageView = UIImageView()
@@ -30,7 +31,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let solLavel: UILabel = {
+    private let solLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Helvetica", size: 8)
         label.numberOfLines = 1
@@ -68,11 +69,11 @@ class ImageCollectionViewCell: UICollectionViewCell {
         idLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         idLabel.heightAnchor.constraint(equalToConstant: 16).isActive = true
         idLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        contentView.addSubview(solLavel)
-        solLavel.topAnchor.constraint(equalTo: idLabel.bottomAnchor, constant: 1).isActive = true
-        solLavel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        solLavel.heightAnchor.constraint(equalToConstant: 8).isActive = true
-        solLavel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        contentView.addSubview(solLabel)
+        solLabel.topAnchor.constraint(equalTo: idLabel.bottomAnchor, constant: 1).isActive = true
+        solLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        solLabel.heightAnchor.constraint(equalToConstant: 8).isActive = true
+        solLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         contentView.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: photoImage.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: photoImage.centerYAnchor).isActive = true
@@ -81,8 +82,18 @@ class ImageCollectionViewCell: UICollectionViewCell {
         activityIndicator.startAnimating()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        photo = nil
+    }
+    
+    public func set(photo: Photo) {
+        self.photo = photo
+        self.idLabel.text = String(photo.id)
+        self.solLabel.text = String(photo.sol)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

@@ -12,6 +12,7 @@ class ImageTableViewCell: UITableViewCell {
     static let identifier = "ImageTableViewCell"
     
     private let imageCollectionView: UICollectionView?
+    public var section: Section?
     
     let sectionInserts = UIEdgeInsets(top: 1, left: 9, bottom: 1, right: 9)
     let itemsPerRow: CGFloat = 1
@@ -25,10 +26,10 @@ class ImageTableViewCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        settingsCollectionView()
+        setupCollectionView()
     }
     
-    private func settingsCollectionView() {
+    private func setupCollectionView() {
         guard let collectionView = imageCollectionView else { return }
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionView.dataSource = self
@@ -54,13 +55,19 @@ class ImageTableViewCell: UITableViewCell {
 }
 
 extension ImageTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sectionArray.count
+        return self.section?.items.count ?? 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = imageCollectionView?.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = imageCollectionView?.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell,
+              let section = section
+        else { return UICollectionViewCell() }
+        switch section.items[indexPath.item].template {
+        case .photo(let photo):
+            cell.set(photo: photo)
+        }
         return cell
     }
 }
@@ -69,15 +76,15 @@ extension ImageTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 137, height: 120)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return sectionInserts
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInserts.left
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInserts.left
     }
