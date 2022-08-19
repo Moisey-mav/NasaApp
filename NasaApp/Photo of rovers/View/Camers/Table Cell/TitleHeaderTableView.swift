@@ -1,5 +1,5 @@
 //
-//  TitleHeaderTableViewCell.swift
+//  TitleHeaderTableView.swift
 //  NasaApp
 //
 //  Created by Владислав Моисеев on 22.07.2022.
@@ -11,7 +11,7 @@ protocol TitleDelegate: AnyObject {
     func did(select camera: Photo.Camera)
 }
 
-class TitleHeaderTableViewCell: UITableViewHeaderFooterView {
+class TitleHeaderTableView: UITableViewHeaderFooterView {
 
     static let identifier = "TitleHeaderTableViewCell"
     

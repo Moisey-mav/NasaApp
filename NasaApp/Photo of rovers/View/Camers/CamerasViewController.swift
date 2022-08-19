@@ -16,7 +16,7 @@ class CamerasViewController: UIViewController {
     let camerasTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.identifier)
-        tableView.register(TitleHeaderTableViewCell.self, forHeaderFooterViewReuseIdentifier: TitleHeaderTableViewCell.identifier)
+        tableView.register(TitleHeaderTableView.self, forHeaderFooterViewReuseIdentifier: TitleHeaderTableView.identifier)
         return tableView
     }()
     
@@ -117,7 +117,7 @@ extension CamerasViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = camerasTableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableViewCell.identifier) as! TitleHeaderTableViewCell 
+        let headerView = camerasTableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableView.identifier) as! TitleHeaderTableView
         switch networkDataFetcher.sections[section].template {
         case .photos(let camera):
             headerView.set(photoCamera: camera)

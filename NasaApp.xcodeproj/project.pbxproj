@@ -16,7 +16,7 @@
 		947E6EFF2889D91F00D8801C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6EFE2889D91F00D8801C /* SettingsViewController.swift */; };
 		947E6F032889DCF700D8801C /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F022889DCF700D8801C /* SettingsTableViewCell.swift */; };
 		947E6F07288A106400D8801C /* RoverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F06288A106400D8801C /* RoverSettings.swift */; };
-		947E6F13288AB29D00D8801C /* TitleHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F12288AB29D00D8801C /* TitleHeaderTableViewCell.swift */; };
+		947E6F13288AB29D00D8801C /* TitleHeaderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F12288AB29D00D8801C /* TitleHeaderTableView.swift */; };
 		947E6F15288ABDFC00D8801C /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F14288ABDFC00D8801C /* ImageCollectionViewCell.swift */; };
 		947E6F1C288AD63600D8801C /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F1B288AD63600D8801C /* ImageTableViewCell.swift */; };
 		94B1A1BA288C108100E1684E /* UrlRover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1A1B9288C108100E1684E /* UrlRover.swift */; };
@@ -39,7 +39,7 @@
 		947E6EFE2889D91F00D8801C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		947E6F022889DCF700D8801C /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		947E6F06288A106400D8801C /* RoverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoverSettings.swift; sourceTree = "<group>"; };
-		947E6F12288AB29D00D8801C /* TitleHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		947E6F12288AB29D00D8801C /* TitleHeaderTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderTableView.swift; sourceTree = "<group>"; };
 		947E6F14288ABDFC00D8801C /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		947E6F1B288AD63600D8801C /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		94B1A1B9288C108100E1684E /* UrlRover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlRover.swift; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 		947E6F042889DD0600D8801C /* Table Cell */ = {
 			isa = PBXGroup;
 			children = (
-				947E6F12288AB29D00D8801C /* TitleHeaderTableViewCell.swift */,
+				947E6F12288AB29D00D8801C /* TitleHeaderTableView.swift */,
 				947E6F1B288AD63600D8801C /* ImageTableViewCell.swift */,
 			);
 			path = "Table Cell";
@@ -300,7 +300,7 @@
 				947E6F1C288AD63600D8801C /* ImageTableViewCell.swift in Sources */,
 				94B1A1BA288C108100E1684E /* UrlRover.swift in Sources */,
 				947E6EFD2889D8DC00D8801C /* CamerasViewController.swift in Sources */,
-				947E6F13288AB29D00D8801C /* TitleHeaderTableViewCell.swift in Sources */,
+				947E6F13288AB29D00D8801C /* TitleHeaderTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
