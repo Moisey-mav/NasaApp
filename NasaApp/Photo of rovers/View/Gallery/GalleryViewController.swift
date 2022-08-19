@@ -12,15 +12,12 @@ class GalleryViewController: UIViewController {
     private var galleryCollectionView: UICollectionView?
     let itemsPerRow: CGFloat = 2
     let sectionInserts = UIEdgeInsets(top: 38, left: 9, bottom: 11, right: 9)
-    var roverTitle: String? = "Spirit"
-    let sectionArray = ["IconCourse-UIKIt",
-                        "IconCourse-WebKit",
-                        "IconCourse-Api",
-                        "IconCourse-CoreData",
-                        "IconCourse-GCD",
-                        "IconCourse-DesignPatterns",
-                        "IconCourse-Notifications",
-                        "IconCourse-Networking"]
+    
+    var cameraName = String()
+    var roverName = String()
+    let date = "2015-6-3"
+    let networkDataFetcher = NetworkDataFetcher()
+    private var sections: [Section] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,20 +27,27 @@ class GalleryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupTitleRover()
+        print(cameraName)
     }
     
     private func setupUI() {
         settingsCollectionView()
-        setupNavigationController(topTitle: "23.08.22", bottomTitle: roverTitle)
+        setupNavigationController(topTitle: "23.08.22", bottomTitle: roverName)
+    
     }
     
     private func setupTitleRover() {
-        if RoverSettings.roverName != roverTitle {
+        if RoverSettings.roverName != roverName {
             title = RoverSettings.roverName
-            roverTitle = RoverSettings.roverName
+            guard let name = RoverSettings.roverName else { return }
+            roverName = name
+           
+            galleryCollectionView?.reloadData()
         } else {
             title = RoverSettings.roverName
-            roverTitle = RoverSettings.roverName
+            guard let name = RoverSettings.roverName else { return }
+            roverName = name
+            galleryCollectionView?.reloadData()
         }
     }
     
@@ -83,15 +87,21 @@ class GalleryViewController: UIViewController {
 extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return sections.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sectionArray.count
+        return sections[section].items.count
     }
             
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = galleryCollectionView?.dequeueReusableCell(withReuseIdentifier: GalleryCollectionViewCell.identifier, for: indexPath) as? GalleryCollectionViewCell else { return UICollectionViewCell() }
+        var cell = UICollectionViewCell()
+        switch sections[indexPath.section].items[indexPath.item].template {
+        case .photo(let photo):
+            guard let photoCell = galleryCollectionView?.dequeueReusableCell(withReuseIdentifier: GalleryCollectionViewCell.identifier, for: indexPath) as? GalleryCollectionViewCell else { return cell }
+            photoCell.set(photo: photo)
+            cell = photoCell
+        }
         return cell
     }
 }

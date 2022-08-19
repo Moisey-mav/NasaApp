@@ -12,7 +12,7 @@
 		947E6EE92889D71400D8801C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947E6EE82889D71400D8801C /* Assets.xcassets */; };
 		947E6EEC2889D71400D8801C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 947E6EEA2889D71400D8801C /* LaunchScreen.storyboard */; };
 		947E6EF92889D87B00D8801C /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6EF82889D87B00D8801C /* TabBarViewController.swift */; };
-		947E6EFD2889D8DC00D8801C /* CamersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6EFC2889D8DC00D8801C /* CamersViewController.swift */; };
+		947E6EFD2889D8DC00D8801C /* CamerasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6EFC2889D8DC00D8801C /* CamerasViewController.swift */; };
 		947E6EFF2889D91F00D8801C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6EFE2889D91F00D8801C /* SettingsViewController.swift */; };
 		947E6F032889DCF700D8801C /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F022889DCF700D8801C /* SettingsTableViewCell.swift */; };
 		947E6F07288A106400D8801C /* RoverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F06288A106400D8801C /* RoverSettings.swift */; };
@@ -35,7 +35,7 @@
 		947E6EEB2889D71400D8801C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		947E6EED2889D71400D8801C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		947E6EF82889D87B00D8801C /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		947E6EFC2889D8DC00D8801C /* CamersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamersViewController.swift; sourceTree = "<group>"; };
+		947E6EFC2889D8DC00D8801C /* CamerasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamerasViewController.swift; sourceTree = "<group>"; };
 		947E6EFE2889D91F00D8801C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		947E6F022889DCF700D8801C /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		947E6F06288A106400D8801C /* RoverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoverSettings.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		947E6EFA2889D88F00D8801C /* Camers */ = {
 			isa = PBXGroup;
 			children = (
-				947E6EFC2889D8DC00D8801C /* CamersViewController.swift */,
+				947E6EFC2889D8DC00D8801C /* CamerasViewController.swift */,
 				947E6F042889DD0600D8801C /* Table Cell */,
 				947E6F16288AC57600D8801C /* Collection cell */,
 			);
@@ -209,8 +209,8 @@
 		94DF0BA9288B63E6002FD0B8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				94B1A1B9288C108100E1684E /* UrlRover.swift */,
 				94DF0BAA288B6439002FD0B8 /* NetworkDataFetcher.swift */,
+				94B1A1B9288C108100E1684E /* UrlRover.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -299,7 +299,7 @@
 				94DF0BA5288B5D99002FD0B8 /* Constant.swift in Sources */,
 				947E6F1C288AD63600D8801C /* ImageTableViewCell.swift in Sources */,
 				94B1A1BA288C108100E1684E /* UrlRover.swift in Sources */,
-				947E6EFD2889D8DC00D8801C /* CamersViewController.swift in Sources */,
+				947E6EFD2889D8DC00D8801C /* CamerasViewController.swift in Sources */,
 				947E6F13288AB29D00D8801C /* TitleHeaderTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,8 +9,9 @@ import Foundation
 
 class NetworkDataFetcher {
     
+    var view: CamerasViewController?
+    
     public var sections: [Section] = []
-    weak var tableView: CamersViewController?
     
     // декодируем полученные JSON данные в модель
     func fetchData(_ urlString: String?) {
@@ -37,8 +38,7 @@ class NetworkDataFetcher {
                 }
                 DispatchQueue.main.async {
                     self.sections = modernSections
-                    print(sections.count)
-                    self.tableView?.camersTableView.reloadData()
+                    self.view?.camerasTableView.reloadData()
                 }
             } catch let error {
                 print("Error serialization json", error)

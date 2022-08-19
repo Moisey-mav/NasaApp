@@ -1,5 +1,5 @@
 //
-//  CamersViewController.swift
+//  CamerasViewController.swift
 //  NasaApp
 //
 //  Created by Владислав Моисеев on 21.07.2022.
@@ -7,19 +7,23 @@
 
 import UIKit
 
-class CamersViewController: UIViewController {
+class CamerasViewController: UIViewController {
     
-    let camersTableView: UITableView = {
+    let constantFile = Constant()
+    let urlRover = UrlRover()
+    let networkDataFetcher = NetworkDataFetcher()
+    
+    let camerasTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(ImageTableViewCell.self, forCellReuseIdentifier: ImageTableViewCell.identifier)
+        tableView.register(TitleHeaderTableViewCell.self, forHeaderFooterViewReuseIdentifier: TitleHeaderTableViewCell.identifier)
         return tableView
     }()
     
     public var roverName: String = "Curiosity"
     let date = "2015-6-3"
-    let constantFile = Constant()
-    let urlRover = UrlRover()
-    let networkDataFetcher = NetworkDataFetcher()
+    public var sections: Section?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +40,12 @@ class CamersViewController: UIViewController {
             title = RoverSettings.roverName
             roverName = RoverSettings.roverName ?? "Unknow rover"
             networkData()
-            camersTableView.reloadData()
+            camerasTableView.reloadData()
         } else {
             title = RoverSettings.roverName
             roverName = RoverSettings.roverName ?? "Unknow rover"
             networkData()
-            camersTableView.reloadData()
+            camerasTableView.reloadData()
         }
     }
 
@@ -75,16 +79,16 @@ class CamersViewController: UIViewController {
     }
     
     private func configureTableView() {
-        view.addSubview(camersTableView)
-        camersTableView.frame = view.bounds
-        camersTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        camersTableView.backgroundColor = .white
-        camersTableView.dataSource = self
-        camersTableView.delegate = self
+        view.addSubview(camerasTableView)
+        camerasTableView.frame = view.bounds
+        camerasTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        camerasTableView.backgroundColor = .white
+        camerasTableView.dataSource = self
+        camerasTableView.delegate = self
     }
 }
 
-extension CamersViewController: UITableViewDelegate, UITableViewDataSource {
+extension CamerasViewController: UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return networkDataFetcher.sections.count
@@ -100,9 +104,12 @@ extension CamersViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
+}
+
+extension CamerasViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-      return 122
+        return 122
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -110,19 +117,23 @@ extension CamersViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = TitleHeaderTableViewCell()
-        headerView.cameraLabel.text = "hello"
-        headerView.indicatorImage.image = UIImage(named: "disclosure indicator")
-        headerView.accessoryType = UITableViewCell.AccessoryType.none
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedHeader))
-        headerView.addGestureRecognizer(tap)
+        let headerView = camerasTableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableViewCell.identifier) as! TitleHeaderTableViewCell 
+        switch networkDataFetcher.sections[section].template {
+        case .photos(let camera):
+            headerView.set(photoCamera: camera)
+        }
+        headerView.delegate = self
         return headerView
     }
-    
-    @objc func tappedHeader() {
+}
+
+extension CamerasViewController: TitleDelegate {
+    func did(select camera: Photo.Camera) {
         let vc = GalleryViewController()
+        vc.cameraName = camera.name
         navigationController?.pushViewController(vc, animated: true)
     }
 }
+
 
 

@@ -20,7 +20,7 @@ class TabBarViewController: UITabBarController {
     }
     
     private func setupVC() {
-        let camersVC = CamersViewController()
+        let camersVC = CamerasViewController()
         let navCamersRootVC = UINavigationController(rootViewController: camersVC)
         camersVC.title = "Камеры"
         let settingsVC = SettingsViewController()

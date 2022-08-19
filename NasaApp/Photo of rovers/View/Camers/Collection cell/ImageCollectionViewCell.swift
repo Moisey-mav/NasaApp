@@ -55,10 +55,10 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        setupContent()
+        setupConstraint()
     }
     
-    private func setupContent() {
+    private func setupConstraint() {
         contentView.addSubview(photoImage)
         photoImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         photoImage.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
@@ -89,8 +89,8 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     public func set(photo: Photo) {
         self.photo = photo
-        self.idLabel.text = String(photo.id)
-        self.solLabel.text = String(photo.sol)
+        self.idLabel.text = "id #\(String(photo.id))"
+        self.solLabel.text = "СОЛ #\(String(photo.sol))"
     }
     
     required init?(coder: NSCoder) {

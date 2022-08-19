@@ -16,16 +16,17 @@ class ImageTableViewCell: UITableViewCell {
     
     let sectionInserts = UIEdgeInsets(top: 1, left: 9, bottom: 1, right: 9)
     let itemsPerRow: CGFloat = 1
-    let sectionArray = ["image_1",
-                        "image_2",
-                        "image_3",
-                        "image_4"]
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
+    }
+    
+    private func setupUI() {
         setupCollectionView()
     }
     

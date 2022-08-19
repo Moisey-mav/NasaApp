@@ -7,10 +7,11 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController {
 
     let roversArray = ["Spirit", "Opportunity", "Curiosity", "Perseverance"]
     let roverName: String? = ""
+    let camersView = CamerasViewController()
     
     private let settingsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -56,6 +57,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         settingsTableView.dataSource = self
         settingsTableView.delegate = self
     }
+}
+
+extension SettingsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return roversArray.count
@@ -72,6 +76,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.selectionStyle = .none
         return cell
     }
+}
+
+extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? SettingsTableViewCell else { return }
@@ -85,6 +92,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.accessoryView = nil
         cell.labelRover.textColor = UIColor(named: "CustomBlack")
     }
-
-
 }
+
+

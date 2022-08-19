@@ -11,6 +11,8 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "GalleryCollectionViewCell"
     
+    private var photo: Photo?
+    
     private let photoImage: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -30,7 +32,7 @@ class GalleryCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let solLavel: UILabel = {
+    private let solLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Helvetica", size: 8)
         label.numberOfLines = 1
@@ -54,10 +56,10 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
-        setupContent()
+        setupConstraint()
     }
     
-    private func setupContent() {
+    private func setupConstraint() {
         contentView.addSubview(photoImage)
         photoImage.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         photoImage.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
@@ -68,17 +70,28 @@ class GalleryCollectionViewCell: UICollectionViewCell {
         idLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         idLabel.heightAnchor.constraint(equalToConstant: 16).isActive = true
         idLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        contentView.addSubview(solLavel)
-        solLavel.topAnchor.constraint(equalTo: idLabel.bottomAnchor, constant: 1).isActive = true
-        solLavel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        solLavel.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        solLavel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        contentView.addSubview(solLabel)
+        solLabel.topAnchor.constraint(equalTo: idLabel.bottomAnchor, constant: 1).isActive = true
+        solLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        solLabel.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        solLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
         contentView.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: photoImage.centerXAnchor).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: photoImage.centerYAnchor).isActive = true
         activityIndicator.heightAnchor.constraint(equalToConstant: 50).isActive = true
         activityIndicator.widthAnchor.constraint(equalToConstant: 50).isActive = true
         activityIndicator.startAnimating()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        photo = nil
+    }
+    
+    public func set(photo: Photo) {
+        self.photo = photo
+        self.idLabel.text = "id #\(String(photo.id))"
+        self.solLabel.text = "СОЛ #\(String(photo.sol))"
     }
     
     required init?(coder: NSCoder) {
