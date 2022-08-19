@@ -117,7 +117,7 @@ extension CamerasViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = camerasTableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableView.identifier) as! TitleHeaderTableView
+        guard let headerView = camerasTableView.dequeueReusableHeaderFooterView(withIdentifier: TitleHeaderTableView.identifier) as? TitleHeaderTableView else { return UITableViewHeaderFooterView() }
         switch networkDataFetcher.sections[section].template {
         case .photos(let camera):
             headerView.set(photoCamera: camera)
