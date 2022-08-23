@@ -17,11 +17,11 @@ final class RoverSettings {
         get {
             return UserDefaults.standard.string(forKey: SettingsKeys.roverName.rawValue)
         } set {
-            let defolts = UserDefaults.standard
+            let defaults = UserDefaults.standard
             let key = SettingsKeys.roverName.rawValue
             if let name = newValue {
                 print("value: \(name) was added to key \(key)")
-                defolts.set(name, forKey: key)
+                defaults.set(name, forKey: key)
             }
         }
     }

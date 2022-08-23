@@ -11,12 +11,16 @@ class ImageTableViewCell: UITableViewCell {
     
     static let identifier = "ImageTableViewCell"
     
-    private let imageCollectionView: UICollectionView?
-    public var section: Section?
+    private let imageCollectionView: UICollectionView
+    private var section: Section?
     
     let sectionInserts = UIEdgeInsets(top: 1, left: 9, bottom: 1, right: 9)
     let itemsPerRow: CGFloat = 1
     
+    public func configure(with section: Section?) {
+        self.section = section
+        imageCollectionView.reloadData()
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         let layout = UICollectionViewFlowLayout()
@@ -30,8 +34,13 @@ class ImageTableViewCell: UITableViewCell {
         setupCollectionView()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        section = nil
+    }
+    
     private func setupCollectionView() {
-        guard let collectionView = imageCollectionView else { return }
+        let collectionView = imageCollectionView
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -39,10 +48,10 @@ class ImageTableViewCell: UITableViewCell {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        setupConstraint(collectionView: collectionView)
+        setupConstraints(collectionView: collectionView)
     }
     
-    private func setupConstraint(collectionView: UICollectionView) {
+    private func setupConstraints(collectionView: UICollectionView) {
         contentView.addSubview(collectionView)
         collectionView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 9).isActive = true
         collectionView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
@@ -62,7 +71,7 @@ extension ImageTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = imageCollectionView?.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell,
+        guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell,
               let section = section
         else { return UICollectionViewCell() }
         switch section.items[indexPath.item].template {

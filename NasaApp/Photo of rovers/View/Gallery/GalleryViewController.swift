@@ -8,97 +8,137 @@
 import UIKit
 
 class GalleryViewController: UIViewController {
-
-    private var galleryCollectionView: UICollectionView?
-    let itemsPerRow: CGFloat = 2
-    let sectionInserts = UIEdgeInsets(top: 38, left: 9, bottom: 11, right: 9)
     
     var cameraName = String()
     var roverName = String()
-    let date = "2015-6-3"
+    let date = "2017-5-26"
+    
+    let urlRover = UrlRover()
+    let constantFile = Constant()
+    
     let networkDataFetcher = NetworkDataFetcher()
-    private var sections: [Section] = []
+    var cameraArray: [Section] = []
+    
+    private let navigationLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = #colorLiteral(red: 0.7215686275, green: 0.7607843137, blue: 0.8, alpha: 1)
+        label.font = UIFont(name: "Helvetica", size: 11)
+        label.font = UIFont.boldSystemFont(ofSize: 11)
+        return label
+    }()
+    
+    var galleryCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(GalleryCollectionViewCell.self, forCellWithReuseIdentifier: GalleryCollectionViewCell.identifier)
+        return collectionView
+    }()
+    
+    let itemsPerRow: CGFloat = 2
+    let sectionInserts = UIEdgeInsets(top: 38, left: 9, bottom: 11, right: 9)
+    
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.hidesWhenStopped = true
+        indicator.color = .black
+        return indicator
+    }()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
+    private func setupUI() {
+        setupConstrain()
+        patterns()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupTitleRover()
-        print(cameraName)
+        setupTitle()
     }
     
-    private func setupUI() {
-        settingsCollectionView()
-        setupNavigationController(topTitle: "23.08.22", bottomTitle: roverName)
-    
+    private func setupTitle() {
+        navigationTitles(topTitle: "23.08.22")
+        activityIndicator.startAnimating()
+        networkData()
     }
     
-    private func setupTitleRover() {
-        if RoverSettings.roverName != roverName {
-            title = RoverSettings.roverName
-            guard let name = RoverSettings.roverName else { return }
-            roverName = name
-           
-            galleryCollectionView?.reloadData()
-        } else {
-            title = RoverSettings.roverName
-            guard let name = RoverSettings.roverName else { return }
-            roverName = name
-            galleryCollectionView?.reloadData()
+    private func networkData() {
+        let url = urlRover.setupData(name: roverName, apiKey: constantFile.apiKey, earthDate: date)
+        networkDataFetcher.fetchData(url) { [weak self] in
+            DispatchQueue.main.async {
+                self?.filterCamera()
+                self?.activityIndicator.stopAnimating()
+                self?.galleryCollectionView.reloadData()
+            }
         }
     }
     
-    private func settingsCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        galleryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        guard let collectionView = galleryCollectionView else { return }
-        collectionView.register(GalleryCollectionViewCell.self, forCellWithReuseIdentifier: GalleryCollectionViewCell.identifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        view.addSubview(collectionView)
-        collectionView.frame = view.bounds
+    private func filterCamera() {
+        var modernSection: [Section] = []
+        let networkArray = networkDataFetcher.photosArray
+        for camera in networkArray.keys {
+            if camera.name == cameraName {
+                guard let photos = networkArray[camera] else { continue }
+                modernSection.append(Section(template: .photos(camera: camera), items: photos.compactMap({Item(template: .photo($0))}), title: .camera(camera)))
+            }
+        }
+        cameraArray = modernSection
     }
     
-    private func setupNavigationController(topTitle: String?, bottomTitle: String?) {
-        title = bottomTitle
+    private func patterns() {
+        galleryCollectionView.dataSource = self
+        galleryCollectionView.delegate = self
+        networkDataFetcher.delegate = self
+    }
+    
+    private func navigationTitles(topTitle: String?) {
+        title = RoverSettings.roverName
+        roverName = RoverSettings.roverName ?? "Unknown rover"
         navigationController?.navigationBar.prefersLargeTitles = true
+        titleConstraint()
+    }
+    
+    private func titleConstraint() {
+        guard let navigationBar = self.navigationController?.navigationBar else { return }
+        navigationBar.addSubview(navigationLabel)
+        navigationLabel.translatesAutoresizingMaskIntoConstraints = false
+        navigationLabel.leftAnchor.constraint(equalTo: navigationBar.leftAnchor, constant: 16).isActive = true
+        navigationLabel.topAnchor.constraint(equalTo: navigationBar.topAnchor, constant: 22).isActive = true
+        navigationLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        navigationLabel.heightAnchor.constraint(equalToConstant: 12).isActive = true
+    }
+    
+    private func setupConstrain() {
+        view.addSubview(galleryCollectionView)
+        galleryCollectionView.frame = view.bounds
         
-        if let navigationBar = self.navigationController?.navigationBar {
-            let topLable = UILabel()
-            topLable.text = topTitle
-            topLable.textColor = #colorLiteral(red: 0.7215686275, green: 0.7607843137, blue: 0.8, alpha: 1)
-            topLable.font = UIFont(name: "Helvetica", size: 11)
-            topLable.font = UIFont.boldSystemFont(ofSize: 11)
-            topLable.translatesAutoresizingMaskIntoConstraints = false
-            
-            navigationBar.addSubview(topLable)
-            topLable.leftAnchor.constraint(equalTo: navigationBar.leftAnchor, constant: 16).isActive = true
-            topLable.topAnchor.constraint(equalTo: navigationBar.topAnchor, constant: 22).isActive = true
-            topLable.widthAnchor.constraint(equalToConstant: 70).isActive = true
-            topLable.heightAnchor.constraint(equalToConstant: 12).isActive = true
-        }
+        galleryCollectionView.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.centerYAnchor.constraint(equalTo: galleryCollectionView.centerYAnchor, constant: -100).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: galleryCollectionView.centerXAnchor).isActive = true
     }
 }
 
 extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
+        return cameraArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections[section].items.count
+        return cameraArray[section].items.count
     }
             
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = UICollectionViewCell()
-        switch sections[indexPath.section].items[indexPath.item].template {
+        switch cameraArray[indexPath.section].items[indexPath.item].template {
         case .photo(let photo):
-            guard let photoCell = galleryCollectionView?.dequeueReusableCell(withReuseIdentifier: GalleryCollectionViewCell.identifier, for: indexPath) as? GalleryCollectionViewCell else { return cell }
+            guard let photoCell = galleryCollectionView.dequeueReusableCell(withReuseIdentifier: GalleryCollectionViewCell.identifier, for: indexPath) as? GalleryCollectionViewCell else { return cell }
             photoCell.set(photo: photo)
             cell = photoCell
         }
@@ -121,5 +161,12 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInserts.left
+    }
+}
+
+extension GalleryViewController: NetworkDataDelegate {
+    func refresh() {
+        galleryCollectionView.reloadData()
+        print("OO")
     }
 }

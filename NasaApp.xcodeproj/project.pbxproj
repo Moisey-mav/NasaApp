@@ -131,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				947E6EFC2889D8DC00D8801C /* CamerasViewController.swift */,
+				94930C2328B2D04E000B2847 /* Table Header */,
 				947E6F042889DD0600D8801C /* Table Cell */,
 				947E6F16288AC57600D8801C /* Collection cell */,
 			);
@@ -167,7 +168,6 @@
 		947E6F042889DD0600D8801C /* Table Cell */ = {
 			isa = PBXGroup;
 			children = (
-				947E6F12288AB29D00D8801C /* TitleHeaderTableView.swift */,
 				947E6F1B288AD63600D8801C /* ImageTableViewCell.swift */,
 			);
 			path = "Table Cell";
@@ -179,6 +179,14 @@
 				947E6F14288ABDFC00D8801C /* ImageCollectionViewCell.swift */,
 			);
 			path = "Collection cell";
+			sourceTree = "<group>";
+		};
+		94930C2328B2D04E000B2847 /* Table Header */ = {
+			isa = PBXGroup;
+			children = (
+				947E6F12288AB29D00D8801C /* TitleHeaderTableView.swift */,
+			);
+			path = "Table Header";
 			sourceTree = "<group>";
 		};
 		94DF0B9C288B424E002FD0B8 /* Gallery */ = {

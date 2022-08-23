@@ -26,7 +26,7 @@ class GalleryCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont(name: "Helvetica", size: 13)
         label.numberOfLines = 1
-        label.text = "id #10212"
+        label.text = "id:"
         label.textColor = UIColor(named: "CustomBlack")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -36,7 +36,7 @@ class GalleryCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont(name: "Helvetica", size: 8)
         label.numberOfLines = 1
-        label.text = "СОЛ #1000"
+        label.text = "СОЛ"
         label.textColor = UIColor(named: "CustomWhiteText")
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

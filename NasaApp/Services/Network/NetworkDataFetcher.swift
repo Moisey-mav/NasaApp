@@ -7,14 +7,23 @@
 
 import Foundation
 
+protocol NetworkDataDelegate: AnyObject {
+    func refresh()
+}
+
 class NetworkDataFetcher {
     
-    var view: CamerasViewController?
+    public weak var delegate: NetworkDataDelegate?
     
     public var sections: [Section] = []
+    public var photosArray: [Photo.Camera: [Photo]] = [:]
+    
     
     // декодируем полученные JSON данные в модель
-    func fetchData(_ urlString: String?) {
+    func fetchData(_ urlString: String?, completion: @escaping () -> Void) {
+        sections.removeAll()
+        
+        delegate?.refresh()
         guard let jsonUrLString = urlString else { return }
         guard let url = URL(string: jsonUrLString) else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -36,10 +45,9 @@ class NetworkDataFetcher {
                     guard let photos = sections[camera] else { continue }
                     modernSections.append(Section(template: .photos(camera: camera), items: photos.compactMap({Item(template: .photo($0))}), title: .camera(camera)))
                 }
-                DispatchQueue.main.async {
-                    self.sections = modernSections
-                    self.view?.camerasTableView.reloadData()
-                }
+                self.photosArray = sections
+                self.sections = modernSections
+                completion()
             } catch let error {
                 print("Error serialization json", error)
             }
