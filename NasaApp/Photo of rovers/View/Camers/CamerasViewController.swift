@@ -13,7 +13,7 @@ class CamerasViewController: UIViewController {
     let urlRover = UrlRover()
     let networkDataFetcher = NetworkDataFetcher()
     
-    public var roverName: String = "Curiosity"
+    public var roverName: String? = ""
     let date = "2017-5-26"
     
     private let navigationLabel: UILabel = {
@@ -40,10 +40,11 @@ class CamerasViewController: UIViewController {
         return indicator
     }()
     
-    private let errorLabel: UILabel = {
+    let errorLabel: UILabel = {
         let label = UILabel()
-        label.text = "This rover \n has not images."
-        label.font = UIFont(name: "Helvetica", size: 13)
+        label.text = "This rover \n has not images!"
+        label.font = UIFont(name: "Helvetica-Bold", size: 25)
+        label.alpha = 0.5
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 2
@@ -74,12 +75,23 @@ class CamerasViewController: UIViewController {
     }
     
     private func networkData() {
-        let url = urlRover.setupData(name: roverName, apiKey: constantFile.apiKey, earthDate: date)
+        let url = urlRover.setupData(name: roverName, earthDate: date, apiKey: constantFile.apiKey)
         networkDataFetcher.fetchData(url) { [weak self] in
-            DispatchQueue.main.async {                
+            DispatchQueue.main.async {
+                self?.nothingError()
                 self?.activityIndicator.stopAnimating()
+                self?.activityIndicator.isHidden = true
                 self?.camerasTableView.reloadData()
             }
+        }
+    }
+    
+    private func nothingError() {
+        let sectionsCount = networkDataFetcher.sections.count
+        if sectionsCount == 0 {
+            errorLabel.isHidden = false
+        } else {
+            errorLabel.isHidden = true
         }
     }
     
@@ -90,10 +102,14 @@ class CamerasViewController: UIViewController {
     }
     
     private func navigationTitles(topTitle: String?) {
-        title = RoverSettings.roverName
-        roverName = RoverSettings.roverName ?? "Unknown rover"
+        let name = RoverSettings.roverName
+        if name != nil {
+            title = name
+            roverName = name ?? "Unknown rover"
+        } else {
+            title = roverName
+        }
         navigationLabel.text = topTitle
-        navigationLabel.translatesAutoresizingMaskIntoConstraints = false
         navigationController?.navigationBar.prefersLargeTitles = true
         titleConstraint()
     }
@@ -101,6 +117,7 @@ class CamerasViewController: UIViewController {
     private func titleConstraint() {
         guard let navigationBar = self.navigationController?.navigationBar else { return }
         navigationBar.addSubview(navigationLabel)
+        navigationLabel.translatesAutoresizingMaskIntoConstraints = false
         navigationLabel.leftAnchor.constraint(equalTo: navigationBar.leftAnchor, constant: 16).isActive = true
         navigationLabel.topAnchor.constraint(equalTo: navigationBar.topAnchor, constant: 22).isActive = true
         navigationLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
@@ -111,15 +128,15 @@ class CamerasViewController: UIViewController {
         view.addSubview(camerasTableView)
         camerasTableView.frame = view.bounds
         
-        camerasTableView.addSubview(errorLabel)
+        view.addSubview(errorLabel)
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.centerYAnchor.constraint(equalTo: camerasTableView.centerYAnchor, constant: -100).isActive = true
-        errorLabel.centerXAnchor.constraint(equalTo: camerasTableView.centerXAnchor).isActive = true
+        errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        camerasTableView.addSubview(activityIndicator)
+        view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.centerYAnchor.constraint(equalTo: camerasTableView.centerYAnchor,constant: -100).isActive = true
-        activityIndicator.centerXAnchor.constraint(equalTo: camerasTableView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 }
 
@@ -165,7 +182,6 @@ extension CamerasViewController: UITableViewDataSource {
 extension CamerasViewController: NetworkDataDelegate {
     func refresh() {
         camerasTableView.reloadData()
-        print("HH")
     }
 }
 

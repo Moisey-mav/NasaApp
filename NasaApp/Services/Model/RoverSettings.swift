@@ -19,6 +19,7 @@ final class RoverSettings {
         } set {
             let defaults = UserDefaults.standard
             let key = SettingsKeys.roverName.rawValue
+            print(key)
             if let name = newValue {
                 print("value: \(name) was added to key \(key)")
                 defaults.set(name, forKey: key)

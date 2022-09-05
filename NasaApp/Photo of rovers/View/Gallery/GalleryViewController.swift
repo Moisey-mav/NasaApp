@@ -68,7 +68,7 @@ class GalleryViewController: UIViewController {
     }
     
     private func networkData() {
-        let url = urlRover.setupData(name: roverName, apiKey: constantFile.apiKey, earthDate: date)
+        let url = urlRover.setupData(name: roverName, earthDate: date, apiKey: constantFile.apiKey)
         networkDataFetcher.fetchData(url) { [weak self] in
             DispatchQueue.main.async {
                 self?.filterCamera()
@@ -117,10 +117,10 @@ class GalleryViewController: UIViewController {
         view.addSubview(galleryCollectionView)
         galleryCollectionView.frame = view.bounds
         
-        galleryCollectionView.addSubview(activityIndicator)
+        view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.centerYAnchor.constraint(equalTo: galleryCollectionView.centerYAnchor, constant: -100).isActive = true
-        activityIndicator.centerXAnchor.constraint(equalTo: galleryCollectionView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 }
 
@@ -167,6 +167,5 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
 extension GalleryViewController: NetworkDataDelegate {
     func refresh() {
         galleryCollectionView.reloadData()
-        print("OO")
     }
 }

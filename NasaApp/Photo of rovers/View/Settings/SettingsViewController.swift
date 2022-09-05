@@ -8,9 +8,10 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
     let roversArray = ["Spirit", "Opportunity", "Curiosity", "Perseverance"]
     let roverName: String? = ""
+    var roverIndex: Int = 0
     let camersView = CamerasViewController()
     
     private let settingsTableView: UITableView = {
@@ -74,6 +75,13 @@ extension SettingsViewController: UITableViewDataSource {
         cell.labelRover.text = roversArray[indexPath.row]
         cell.accessoryType = UITableViewCell.AccessoryType.none
         cell.selectionStyle = .none
+        
+        let startValue = UserDefaults.standard.string(forKey: "roverKey")
+        if startValue == cell.labelRover.text {
+            roverIndex = indexPath.row
+            cell.accessoryView = UIImageView(image: UIImage(named: "checkbox"))
+            cell.labelRover.textColor = UIColor(named: "CustomPurple")
+        }
         return cell
     }
 }
@@ -82,6 +90,7 @@ extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? SettingsTableViewCell else { return }
+        UserDefaults.standard.setValue(roversArray[indexPath.row], forKey: "roverKey")
         cell.accessoryView = UIImageView(image: UIImage(named: "checkbox"))
         RoverSettings.roverName = roversArray[indexPath.row]
         cell.labelRover.textColor = UIColor(named: "CustomPurple")

@@ -22,7 +22,6 @@ class NetworkDataFetcher {
     // декодируем полученные JSON данные в модель
     func fetchData(_ urlString: String?, completion: @escaping () -> Void) {
         sections.removeAll()
-        
         delegate?.refresh()
         guard let jsonUrLString = urlString else { return }
         guard let url = URL(string: jsonUrLString) else { return }

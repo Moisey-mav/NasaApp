@@ -91,6 +91,21 @@ class ImageCollectionViewCell: UICollectionViewCell {
         self.photo = photo
         self.idLabel.text = "id #\(String(photo.id))"
         self.solLabel.text = "СОЛ #\(String(photo.sol))"
+        self.setupImage(by: photo.img_src)
+    }
+    
+    fileprivate func setupImage(by url: String?) {
+        guard let urlString = url else { return }
+        let imageURL = URL(string: urlString)
+        let queue = DispatchQueue.global(qos: .utility)
+        queue.async {
+            guard let url = imageURL, let imageData = try? Data(contentsOf: url) else {return}
+            DispatchQueue.main.async { [weak self] in
+                self?.activityIndicator.stopAnimating()
+                self?.activityIndicator.isHidden = true
+                self?.photoImage.image = UIImage(data: imageData)
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
