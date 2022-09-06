@@ -11,36 +11,31 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        settingsTabBar()
+        generateCustomTabBar()
     }
     
-    private func settingsTabBar() {
-        setupVC()
-        settingsCustomTabBar()
+    private func generateCustomTabBar() {
+        generateItems()
+        settingsCustom()
     }
     
-    private func setupVC() {
-        let camersVC = CamerasViewController()
-        let navCamersRootVC = UINavigationController(rootViewController: camersVC)
-        camersVC.title = "Камеры"
-        let settingsVC = SettingsViewController()
-        let navSettingsRootVC = UINavigationController(rootViewController: settingsVC)
-        settingsVC.title = "Настройки"
+    private func generateItems() {
+        let camerasVC = UINavigationController(rootViewController: CamerasViewController())
+        let settingsVC = UINavigationController(rootViewController: SettingsViewController())
         
-        let controllersArray = [navCamersRootVC, navSettingsRootVC]
-        self.setViewControllers(controllersArray, animated: true)
-        setupImageTabBar()
+        viewControllers = [
+            generateVC(viewController: camerasVC, title: "Камеры", image: UIImage(named: "cameras-icon")),
+            generateVC(viewController: settingsVC, title: "Настройки", image: UIImage(named: "settings-icon"))
+        ]
     }
     
-    private func setupImageTabBar() {
-        guard let items = self.tabBar.items else { return }
-        let image = ["cams","settings"]
-        for x in 0...1 {
-            items[x].image = UIImage(named: image[x])
-        }
+    private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
+        viewController.tabBarItem.title = title
+        viewController.tabBarItem.image = image
+        return viewController
     }
     
-    private func settingsCustomTabBar() {
+    private func settingsCustom() {
         self.tabBar.tintColor = UIColor(named: "CustomPurple")
         self.tabBar.backgroundColor = .white
         self.tabBar.backgroundImage = UIImage()

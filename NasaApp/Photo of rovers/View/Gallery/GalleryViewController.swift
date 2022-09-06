@@ -44,7 +44,6 @@ class GalleryViewController: UIViewController {
         indicator.color = .black
         return indicator
     }()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()

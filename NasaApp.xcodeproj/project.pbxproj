@@ -19,6 +19,7 @@
 		947E6F13288AB29D00D8801C /* TitleHeaderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F12288AB29D00D8801C /* TitleHeaderTableView.swift */; };
 		947E6F15288ABDFC00D8801C /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F14288ABDFC00D8801C /* ImageCollectionViewCell.swift */; };
 		947E6F1C288AD63600D8801C /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947E6F1B288AD63600D8801C /* ImageTableViewCell.swift */; };
+		94A85CD628C77F3F00CAC266 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 94A85CD528C77F3F00CAC266 /* Nuke */; };
 		94B1A1BA288C108100E1684E /* UrlRover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B1A1B9288C108100E1684E /* UrlRover.swift */; };
 		94DF0B9B288B4121002FD0B8 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DF0B9A288B4121002FD0B8 /* GalleryViewController.swift */; };
 		94DF0B9F288B4288002FD0B8 /* GalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DF0B9E288B4288002FD0B8 /* GalleryCollectionViewCell.swift */; };
@@ -55,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94A85CD628C77F3F00CAC266 /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +241,9 @@
 			dependencies = (
 			);
 			name = NasaApp;
+			packageProductDependencies = (
+				94A85CD528C77F3F00CAC266 /* Nuke */,
+			);
 			productName = NasaApp;
 			productReference = 947E6EDC2889D71200D8801C /* NasaApp.app */;
 			productType = "com.apple.product-type.application";
@@ -267,6 +272,9 @@
 				Base,
 			);
 			mainGroup = 947E6ED32889D71200D8801C;
+			packageReferences = (
+				94A85CD428C77F3F00CAC266 /* XCRemoteSwiftPackageReference "Nuke" */,
+			);
 			productRefGroup = 947E6EDD2889D71200D8801C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -516,6 +524,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		94A85CD428C77F3F00CAC266 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		94A85CD528C77F3F00CAC266 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94A85CD428C77F3F00CAC266 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 947E6ED42889D71200D8801C /* Project object */;
 }

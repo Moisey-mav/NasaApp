@@ -67,6 +67,7 @@ class CamerasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
     }
     
     private func setupUI() {
@@ -78,6 +79,11 @@ class CamerasViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupTitle()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.hidesBarsOnSwipe = true
     }
    
     private func setupTitle() {
@@ -155,12 +161,12 @@ class CamerasViewController: UIViewController {
         view.addSubview(camerasTableView)
         camerasTableView.frame = view.bounds
         
-        view.addSubview(errorLabel)
+        camerasTableView.addSubview(errorLabel)
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        view.addSubview(activityIndicator)
+        camerasTableView.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

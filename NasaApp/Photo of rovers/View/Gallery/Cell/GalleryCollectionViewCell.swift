@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Nuke
 
 class GalleryCollectionViewCell: UICollectionViewCell {
     
@@ -42,14 +43,6 @@ class GalleryCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView()
-        indicator.hidesWhenStopped = true
-        indicator.color = .black
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
-    
     override init(frame: CGRect) {
         super .init(frame: frame)
         setupUI()
@@ -75,12 +68,6 @@ class GalleryCollectionViewCell: UICollectionViewCell {
         solLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         solLabel.heightAnchor.constraint(equalToConstant: 16).isActive = true
         solLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        contentView.addSubview(activityIndicator)
-        activityIndicator.centerXAnchor.constraint(equalTo: photoImage.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: photoImage.centerYAnchor).isActive = true
-        activityIndicator.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        activityIndicator.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        activityIndicator.startAnimating()
     }
     
     override func prepareForReuse() {
@@ -96,16 +83,14 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     }
     
     fileprivate func setupImage(by url: String?) {
-        guard let urlString = url else { return }
-        let imageURL = URL(string: urlString)
-        let queue = DispatchQueue.global(qos: .utility)
-        queue.async {
-            guard let url = imageURL, let imageData = try? Data(contentsOf: url) else {return}
-            DispatchQueue.main.async { [weak self] in
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
-                self?.photoImage.image = UIImage(data: imageData)
-            }
+        if url != nil {
+            guard let url = url else { return }
+            guard let urlString = URL(string: url) else { return }
+            let options = ImageLoadingOptions(placeholder: UIImage(), transition: .fadeIn(duration: 0.5))
+            let nukeRequest = Nuke.ImageRequest(url: urlString)
+            Nuke.loadImage(with: nukeRequest, options: options, into: photoImage)
+        } else {
+            photoImage.image = UIImage(named: "")
         }
     }
     

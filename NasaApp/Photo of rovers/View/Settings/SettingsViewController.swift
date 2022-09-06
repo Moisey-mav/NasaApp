@@ -17,6 +17,7 @@ class SettingsViewController: UIViewController {
     private let settingsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.estimatedRowHeight = 43
+        tableView.isScrollEnabled = false
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.identifier)
         return tableView
     }()
