@@ -24,18 +24,6 @@ class CamerasViewController: UIViewController {
         return label
     }()
     
-    private let arrowRight: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "arrow-right"), for: .normal)
-        return button
-    }()
-    
-    private let arrowLeft: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "arrow-left"), for: .normal)
-        return button
-    }()
-    
     let camerasTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
@@ -67,7 +55,6 @@ class CamerasViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
     }
     
     private func setupUI() {
@@ -79,11 +66,6 @@ class CamerasViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupTitle()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.hidesBarsOnSwipe = true
     }
    
     private func setupTitle() {
@@ -127,8 +109,8 @@ class CamerasViewController: UIViewController {
         } else {
             title = roverName
         }
-        navigationLabel.text = topTitle
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationLabel.text = topTitle
         titleConstraint()
     }
     
@@ -140,21 +122,6 @@ class CamerasViewController: UIViewController {
         navigationLabel.topAnchor.constraint(equalTo: navigationBar.topAnchor, constant: 22).isActive = true
         navigationLabel.heightAnchor.constraint(equalToConstant: 12).isActive = true
         navigationLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        
-        navigationBar.addSubview(arrowLeft)
-        arrowLeft.translatesAutoresizingMaskIntoConstraints = false
-        arrowLeft.centerYAnchor.constraint(equalTo: navigationBar.centerYAnchor, constant: 20).isActive = true
-        arrowLeft.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -68).isActive = true
-        arrowLeft.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        arrowLeft.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        
-        navigationBar.addSubview(arrowRight)
-        arrowRight.translatesAutoresizingMaskIntoConstraints = false
-        arrowRight.centerYAnchor.constraint(equalTo: arrowLeft.centerYAnchor).isActive = true
-        arrowRight.leftAnchor.constraint(equalTo: arrowLeft.rightAnchor, constant: 32).isActive = true
-        arrowRight.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        arrowRight.widthAnchor.constraint(equalToConstant: 24).isActive = true
-        
     }
     
     private func setupConstrain() {

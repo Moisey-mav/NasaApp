@@ -90,7 +90,7 @@ class GalleryCollectionViewCell: UICollectionViewCell {
             let nukeRequest = Nuke.ImageRequest(url: urlString)
             Nuke.loadImage(with: nukeRequest, options: options, into: photoImage)
         } else {
-            photoImage.image = UIImage(named: "")
+            photoImage.image = UIImage(named: "errorImage-icon")
         }
     }
     

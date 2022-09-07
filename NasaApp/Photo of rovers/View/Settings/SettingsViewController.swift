@@ -11,8 +11,20 @@ class SettingsViewController: UIViewController {
     
     let roversArray = ["Spirit", "Opportunity", "Curiosity", "Perseverance"]
     let roverName: String? = ""
-    var roverIndex: Int = 0
     let camersView = CamerasViewController()
+    var startValue: String? {
+        get {
+            var value = UserDefaults.standard.string(forKey: "roverKey")
+            if value == nil {
+                return "Spirit"
+            } else {
+                return value
+            }
+        }
+        set {
+           UserDefaults.standard.set(newValue, forKey: "roverKey")
+        }
+    }
     
     private let settingsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
@@ -77,11 +89,12 @@ extension SettingsViewController: UITableViewDataSource {
         cell.accessoryType = UITableViewCell.AccessoryType.none
         cell.selectionStyle = .none
         
-        let startValue = UserDefaults.standard.string(forKey: "roverKey")
-        if startValue == cell.labelRover.text {
-            roverIndex = indexPath.row
+        if cell.labelRover.text == startValue {
             cell.accessoryView = UIImageView(image: UIImage(named: "checkbox"))
             cell.labelRover.textColor = UIColor(named: "CustomPurple")
+        } else {
+            cell.accessoryView = nil
+            cell.labelRover.textColor = UIColor(named: "CustomBlack")
         }
         return cell
     }
@@ -90,11 +103,10 @@ extension SettingsViewController: UITableViewDataSource {
 extension SettingsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? SettingsTableViewCell else { return }
         UserDefaults.standard.setValue(roversArray[indexPath.row], forKey: "roverKey")
-        cell.accessoryView = UIImageView(image: UIImage(named: "checkbox"))
+        print(roversArray[indexPath.row])
         RoverSettings.roverName = roversArray[indexPath.row]
-        cell.labelRover.textColor = UIColor(named: "CustomPurple")
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
