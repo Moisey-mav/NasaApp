@@ -14,7 +14,7 @@ class SettingsViewController: UIViewController {
     let camersView = CamerasViewController()
     var startValue: String? {
         get {
-            var value = UserDefaults.standard.string(forKey: "roverKey")
+            let value = UserDefaults.standard.string(forKey: "roverKey")
             if value == nil {
                 return "Spirit"
             } else {

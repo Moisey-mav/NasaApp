@@ -26,6 +26,7 @@
 		94DF0BA5288B5D99002FD0B8 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DF0BA4288B5D99002FD0B8 /* Constant.swift */; };
 		94DF0BA8288B6062002FD0B8 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DF0BA7288B6062002FD0B8 /* PhotoModel.swift */; };
 		94DF0BAB288B6439002FD0B8 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DF0BAA288B6439002FD0B8 /* NetworkDataFetcher.swift */; };
+		94F7DF5928C8E993000EEBAD /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 94F7DF5828C8E993000EEBAD /* Nuke */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94A85CD628C77F3F00CAC266 /* Nuke in Frameworks */,
+				94F7DF5928C8E993000EEBAD /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +245,7 @@
 			name = NasaApp;
 			packageProductDependencies = (
 				94A85CD528C77F3F00CAC266 /* Nuke */,
+				94F7DF5828C8E993000EEBAD /* Nuke */,
 			);
 			productName = NasaApp;
 			productReference = 947E6EDC2889D71200D8801C /* NasaApp.app */;
@@ -274,6 +277,7 @@
 			mainGroup = 947E6ED32889D71200D8801C;
 			packageReferences = (
 				94A85CD428C77F3F00CAC266 /* XCRemoteSwiftPackageReference "Nuke" */,
+				94F7DF5728C8E993000EEBAD /* XCRemoteSwiftPackageReference "Nuke" */,
 			);
 			productRefGroup = 947E6EDD2889D71200D8801C /* Products */;
 			projectDirPath = "";
@@ -534,10 +538,23 @@
 				minimumVersion = 9.1.0;
 			};
 		};
+		94F7DF5728C8E993000EEBAD /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		94A85CD528C77F3F00CAC266 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94A85CD428C77F3F00CAC266 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		94F7DF5828C8E993000EEBAD /* Nuke */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 94A85CD428C77F3F00CAC266 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = Nuke;
